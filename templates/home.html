@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <h3>Create New Account</h3>
+      <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 16px;">Create a new HSA account</p>
+      <form method="post" action="/register">
+        <div class="form-group">
+          <label>Your name</label>
+          <input name="name" placeholder="Jane Doe" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="col">
+    <div class="card">
+      <h3>Login to Existing Account</h3>
+      <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 16px;">Access your existing HSA account</p>
+      <form method="post" action="/login">
+        <div class="form-group">
+          <label>Your name</label>
+          <input name="name" placeholder="Jane Doe" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" style="background: #059669;">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

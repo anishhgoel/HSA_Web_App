@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <h3>Account</h3>
+      <p><strong>User:</strong> {{ user.name }}</p>
+      <p><strong>Balance:</strong> <span class="balance">${{ "%.2f"|format(acct.balance_cents/100) }}</span></p>
+      <form method="post" action="/logout" style="margin-top: 16px;">
+        <button type="submit" style="background: #6b7280; font-size: 0.8rem; padding: 6px 12px;">Logout</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Deposit Funds</h3>
+      <form method="post" action="/deposit">
+        <div class="form-group">
+          <label>Amount (USD)</label>
+          <input name="amount" placeholder="e.g. 200 or 200.00" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Deposit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Issue Virtual Card</h3>
+      <form method="post" action="/issue-card">
+        <button type="submit">Issue Card</button>
+      </form>
+      <ul class="card-list">
+        {% for c in cards %}
+          <li>Card •••• {{ c.last4 }} (exp {{ c.exp_month }}/{{ c.exp_year }})</li>
+        {% else %}
+          <li>No cards yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card">
+      <h3>Make Purchase</h3>
+      <form method="post" action="/purchase">
+        <div class="form-group">
+          <label>Card</label>
+          <select name="card_id" required>
+            {% for c in cards %}
+              <option value="{{ c.id }}">•••• {{ c.last4 }} (exp {{ c.exp_month }}/{{ c.exp_year }})</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Merchant</label>
+          <input name="merchant" placeholder="Local Pharmacy" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select name="category" required>
+            {% for cat in qualified %}
+              <option value="{{ cat }}">{{ cat }}</option>
+            {% endfor %}
+            <option value="restaurant">restaurant (not qualified)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Amount (USD)</label>
+          <input name="amount" placeholder="e.g. 30 or 30.00" required>
+        </div>
+
+        <div class="form-group">
+          <button type="submit">Submit Purchase</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Transactions</h3>
+      <table>
+        <thead>
+          <tr><th>When</th><th>Merchant</th><th>Category</th><th>Amount</th><th>Status</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {% for t in txns %}
+            <tr>
+              <td>{{ t.created_at.strftime("%m/%d %H:%M") }}</td>
+              <td>{{ t.merchant }}</td>
+              <td>{{ t.category }}</td>
+              <td>${{ "%.2f"|format(t.amount_cents/100) }}</td>
+              <td><span class="{{ 'status-approved' if t.approved else 'status-declined' }}">{{ "APPROVED" if t.approved else "DECLINED" }}</span></td>
+              <td>{{ t.reason }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="6">No transactions yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
