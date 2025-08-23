@@ -37,6 +37,5 @@ A simple Health Savings Account (HSA) web application that demonstrates the core
    ```
 
 6. **Youtube Link** :
-   ```
-   https://www.youtube.com/watch?v=zPdaGFZ2TGw&ab_channel=Anish
-   ```
+https://www.youtube.com/watch?v=zPdaGFZ2TGw&ab_channel=Anish
+
