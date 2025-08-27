@@ -17,18 +17,18 @@ A simple Health Savings Account (HSA) web application that demonstrates the core
 
 2. **Create and activate a virtual environment**: (python or python3 in commands depending on version of python installed)
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate   
    ```
 
 3. **Install dependencies**:
    ```bash
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
    ```
 
 4. **Run the application**:
    ```bash
-   python app.py
+   python3 app.py
    ```
 
 5. **Open your browser** and navigate to:
